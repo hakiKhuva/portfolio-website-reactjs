@@ -38,13 +38,14 @@ export default function Projects({username}){
         apiError: null,
     })
     const [storage, setStorage] = useLocalStorage()
+    const projectsRefetchIntervalSeconds = useRef(3600)
     const initialized = useRef(false);
 
     useEffect(()=>{
         if(!initialized.current){
             initialized.current = true;
 
-            if(storage.lastUpdated === null || (storage.lastUpdated !== null && (Date.now() - storage.lastUpdated)/1000 >= 3600)){
+            if(storage.lastUpdated === null || (storage.lastUpdated !== null && (Date.now() - storage.lastUpdated)/1000 >= projectsRefetchIntervalSeconds.current)){
                 fetchRepositories({
                     username: username
                 })
