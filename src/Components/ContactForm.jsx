@@ -1,5 +1,5 @@
 import ContactFormField from "./ContactFormField";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { LuLoader2 } from "react-icons/lu"
 import { config } from "../config"
 import { Formik, Form } from "formik"
@@ -11,7 +11,7 @@ import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 export default function ContactForm(){
     const [formMessages, setFormMessages] = useState([])
 
-    function handleFormSubmission(values, {setSubmitting, resetForm}){
+    const handleFormSubmission = useCallback((values, {setSubmitting, resetForm}) => {
         fetch(config.formspreeFormURL,{
             method:"POST",
             body: JSON.stringify(values),
@@ -54,7 +54,7 @@ export default function ContactForm(){
             ])
             setSubmitting(false)
         })
-    }
+    },[ formMessages ])
 
     return(
         <Formik
@@ -70,28 +70,33 @@ export default function ContactForm(){
             {
                 ({isSubmitting}) => (
                     <Form className="font-karla flex flex-col p-2 w-full">
-
                         {
                         formMessages.length > 0
                         &&
                         formMessages.map(formMessage => (
                             <div
-                                className={`my-2 bg-red w-full p-3 rounded flex items-center shadow ${formMessage.type === "error" ? 'bg-red-300 text-red-900' : 'bg-green-300 text-green-950'}`}
-                                key={formMessage.id}
+                            className={`my-2 bg-red w-full p-3 rounded flex items-center shadow ${formMessage.type === "error" ? 'bg-red-300 text-red-900' : 'bg-green-300 text-green-950'}`}
+                            key={formMessage.id}
                             >
-                                {
-                                formMessage.type === "error" ?
-                                <BiErrorCircle className="text-xl mr-1" />
-                                :
-                                <AiOutlineCheckCircle className="text-xl mr-1" />
-                                }
-                                <p className="text-base">{formMessage.message}</p>
-                                <AiOutlineCloseCircle
-                                    className="text-xl mr-1 mr-0 ml-auto cursor-pointer hover:scale-110 transition"
+                                <div>
+                                    {
+                                    formMessage.type === "error" ?
+                                    <BiErrorCircle className="text-xl mr-1" />
+                                    :
+                                    <AiOutlineCheckCircle className="text-xl mr-1" />
+                                    }
+                                </div>
+                                <p className="text-base break-words">{formMessage.message}</p>
+                                <button type="button"
+                                    className="mr-0 ml-auto cursor-pointer hover:scale-110 transition"
                                     onClick={()=>{
                                         setFormMessages(formMessages.filter(item => item.id != formMessage.id))
                                     }}
-                                />
+                                >
+                                    <AiOutlineCloseCircle
+                                        className="text-xl"
+                                    />
+                                </button>
                             </div>
                         ))
                         }
