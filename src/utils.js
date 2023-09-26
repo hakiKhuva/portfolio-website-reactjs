@@ -26,6 +26,9 @@ async function filterRepositories(repositories){
 
 export async function fetchRepositories({username}){
     const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=20&page=1&type=owner&sort=updated`);
+    if(response.status === 403 && parseInt(response.headers.get("x-ratelimit-remaining")) === 0){
+        throw new Error(`You have requested page more than the limit, please tryagain after ${new Date(parseInt(response.headers.get('x-ratelimit-reset'))*1000)}`)
+    }
     const repositories = await response.json()
     return filterRepositories(repositories)
 }

@@ -25,7 +25,7 @@ export default function Projects({username}){
                 }
             ).catch(
                 err => {
-                    setApiError(err.toString().split(":")[1])
+                    setApiError(err.toString().split(":").slice(1,).join(":"))
                     setLoading(false)
                 }
             )
