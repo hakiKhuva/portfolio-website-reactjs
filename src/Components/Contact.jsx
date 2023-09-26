@@ -10,11 +10,10 @@ import SectionHeading from "./SectionHeading"
 
 export default function Contact(){
     return(
-        <Section sectionId="contact" classNames="bg-gradient-to-tl via-teal-200 from-emerald-300 to-sky-400 pt-12 pb-24 max-sm:p-2">
-            <SectionHeading text={"Contact"} />
-            
-            <div className="w-full max-w-2xl bg-white/60 p-8 rounded shadow-lg max-sm:p-4 mt-6 max-md:mb-28">
-                <div className="flex flex-wrap items-center">
+        <Section sectionId="contact" classNames="bg-gradient-to-tl via-teal-200 from-emerald-300 to-sky-400 py-12 max-sm:p-2">
+            <div className="w-full max-w-2xl bg-white/60 p-8 rounded shadow-lg max-sm:p-4 mt-6 mb-12">
+                <SectionHeading text={"Contact"} />
+                <div className="flex flex-wrap items-center mt-8">
                     {
                     config.connectLinks.github
                     &&
