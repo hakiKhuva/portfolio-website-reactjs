@@ -6,7 +6,6 @@ export default function Navbar(){
             <NavLink to={"about"}>About</NavLink>
             <NavLink to={"projects"}>Projects</NavLink>
             <NavLink to={"contact"}>Contact</NavLink>
-            <NavLink to={"https://github.com/hakiKhuva/portfolio-website-react"}>Source code</NavLink>
         </nav>
     )
 }
