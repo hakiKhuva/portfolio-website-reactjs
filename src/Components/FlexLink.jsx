@@ -4,7 +4,7 @@ export default function FlexLink({iconElement, to, children}){
             {
                 iconElement ?
                 <>
-                    {iconElement}
+                    <div>{iconElement}</div>
                     <span className="text-sm block overflow-hidden whitespace-nowrap text-ellipsis max-w-full">{to}</span>
                 </>
                 :
