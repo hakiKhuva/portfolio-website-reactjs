@@ -16,14 +16,14 @@ function ProjectItem({children}){
 
 function ProjectLanguageBox({text}){
     return(
-        <span className="px-2 py-1 m-1 first:ml-0 last:mr-0 bg-gradient-to-br from-slate-600 to-zinc-900 rounded text-xs text-white">{text}</span>
+        <span className="px-2 py-1 bg-gradient-to-br from-slate-600 to-zinc-900 rounded text-xs text-white">{text}</span>
     )
 }
 
 
 function ProjectLanguages({languages}){
     return(
-        <div className="flex items-center">
+        <div className="flex items-center flex-wrap gap-2">
             {
                 languages.map(lang => <ProjectLanguageBox key={lang} text={lang} />)
             }
