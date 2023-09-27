@@ -8,8 +8,8 @@ export default function About(){
             <div className="w-full max-w-3xl">
                 <h1 className="text-5xl font-bold my-3 max-sm:text-3xl">Hello, I'm {config.name}</h1>
                 <p className="text-2xl max-sm:text-xl my-5">{config.headline}</p>
-                <div className="text-lg flex items-center">
-                    <LuMapPin className="mr-0.5"/>
+                <div className="text-lg flex">
+                    <div><LuMapPin className="mr-0.5 block mt-1"/></div>
                     <span>{config.location}</span>
                 </div>
                 <div className="">

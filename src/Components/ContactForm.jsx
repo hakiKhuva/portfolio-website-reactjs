@@ -75,10 +75,10 @@ export default function ContactForm(){
                         &&
                         formMessages.map(formMessage => (
                             <div
-                            className={`my-2 bg-red w-full p-3 rounded flex items-center shadow ${formMessage.type === "error" ? 'bg-red-300 text-red-900' : 'bg-green-300 text-green-950'}`}
+                            className={`my-2 bg-red w-full p-3 rounded flex shadow ${formMessage.type === "error" ? 'bg-red-300 text-red-900' : 'bg-green-300 text-green-950'}`}
                             key={formMessage.id}
                             >
-                                <div>
+                                <div className="mt-1">
                                     {
                                     formMessage.type === "error" ?
                                     <BiErrorCircle className="text-xl mr-1" />
