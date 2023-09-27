@@ -1,10 +1,10 @@
-import { fetchRepositories } from "../utils";
+import { fetchRepositories, getProjectsFromStorage, setProjectsInStorage } from "../utils";
 import Project from "./Project";
 import Section from "./Section";
 import { useEffect, useRef, useReducer } from "react";
 import Loading from "./Loading";
 import SectionHeading from "./SectionHeading";
-import useLocalStorage from "../hooks/useLocalStorage";
+
 
 const ACTIONS = {
     API_SUCCESS: "api-success",
@@ -37,7 +37,7 @@ export default function Projects({username}){
         projects: [],
         apiError: null,
     })
-    const [storage, setStorage] = useLocalStorage()
+
     const projectsRefetchIntervalSeconds = useRef(3600)
     const initialized = useRef(false);
 
@@ -45,7 +45,9 @@ export default function Projects({username}){
         if(!initialized.current){
             initialized.current = true;
 
-            if(storage.lastUpdated === null || (storage.lastUpdated !== null && (Date.now() - storage.lastUpdated)/1000 >= projectsRefetchIntervalSeconds.current)){
+            const projectsFromStorage = getProjectsFromStorage()
+
+            if(projectsFromStorage.lastUpdated === null || (projectsFromStorage.lastUpdated !== null && (Date.now() - projectsFromStorage.lastUpdated)/1000 >= projectsRefetchIntervalSeconds.current)){
                 fetchRepositories({
                     username: username
                 })
@@ -57,9 +59,7 @@ export default function Projects({username}){
                                 projects: repos
                             }
                         })
-                        setStorage({
-                            projects: repos
-                        })
+                        setProjectsInStorage({projects:repos})
                     }
                 ).catch(
                     err => {
@@ -75,7 +75,7 @@ export default function Projects({username}){
                 dispatch({
                     type: ACTIONS.API_SUCCESS,
                     data: {
-                        projects: storage.projects
+                        projects: projectsFromStorage.projects
                     }
                 })
             }

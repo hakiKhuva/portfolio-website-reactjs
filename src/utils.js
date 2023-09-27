@@ -60,3 +60,26 @@ export function validateContactForm(values){
 
     return errors
 }
+
+
+export function getProjectsFromStorage(){
+    const stateInStorage = window.localStorage.getItem('currentState')
+    if(stateInStorage){
+        try {
+            const data = JSON.parse(stateInStorage)
+            if(typeof(data.lastUpdated) === "number" && Array.isArray(data.projects)){
+                return data;
+            }
+        } catch {}
+    }
+    return {
+        lastUpdated: null,
+    }
+}
+
+export function setProjectsInStorage({projects}){
+    window.localStorage.setItem("currentState", JSON.stringify({
+        projects: projects,
+        lastUpdated: Date.now()
+    }))
+}
